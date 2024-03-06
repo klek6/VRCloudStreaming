@@ -15,7 +15,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// Get a reference to the Firestore service
 const firestore = getFirestore(app);
 
 const servers = {

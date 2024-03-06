@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <title>WebRTC Demo</title>
 </head>
 <body>
+
 <div class="videos">
-    <span id="localStream">
+    <!-- Local Stream Section -->
+    <div id="localStream">
         <h3>Local Stream</h3>
         <video id="webcamVideo" autoplay playsinline></video>
-    </span>
-    <span id="remoteStream">
+    </div>
+
+    <!-- Remote Stream Section -->
+    <div id="remoteStream">
         <h3>Remote Stream</h3>
         <video id="remoteVideo" autoplay playsinline></video>
-    </span>
+    </div>
 </div>
 
+<!-- Control Buttons -->
 <h2>1. DESKTOP</h2>
 <button id="webcamButton">START</button>
 
@@ -27,7 +31,7 @@
 
 <button id="vrButton">Enter VR!</button>
 
-<!-- Placeholder for the A-Frame scene, initially hidden -->
+<!-- A-Frame VR Scene (Hidden Initially) -->
 <a-scene id="vrScene" embedded style="display:none">
     <a-assets>
         <video id="remoteVideoStream" autoplay playsinline></video>
@@ -35,39 +39,33 @@
     <a-videosphere src="#remoteVideoStream"></a-videosphere>
 </a-scene>
 
-    <script type="module" src="/main.js"></script>
+<script type="module" src="/main.js"></script>
 
+<script>
+// VR Button Click Event Listener
+var vrButton = document.getElementById('vrButton');
+var sceneEl = document.getElementById('vrScene');
+var remoteVideo = document.getElementById('remoteVideo');
 
+vrButton.addEventListener('click', function() {
+    // Hide the button and get the video stream from the existing remote video element
+    vrButton.style.display = 'none';
+    var stream = remoteVideo.srcObject;
+    var remoteVideoStream = document.getElementById('remoteVideoStream');
+    
+    // Set the srcObject of the A-Frame video element to the stream
+    remoteVideoStream.srcObject = stream;
+    
+    // Show the A-Frame scene when the remote stream is playing
+    remoteVideoStream.onloadedmetadata = function() {
+        remoteVideoStream.play();
+        sceneEl.style.display = 'block';
+        document.querySelector('a-videosphere').setAttribute('src', '#remoteVideoStream');
+    };
+});
 
-
-    <script>
-    var vrButton = document.getElementById('vrButton');
-    var sceneEl = document.getElementById('vrScene');
-    var remoteVideo = document.getElementById('remoteVideo'); // Existing remote video element
-
-    vrButton.addEventListener('click', function() {
-        // Assuming the remote stream is already playing in remoteVideo
-        // Hide the button
-        vrButton.style.display = 'none';
-
-        // Get the video stream from the existing remote video element
-        var stream = remoteVideo.srcObject;
-        var remoteVideoStream = document.getElementById('remoteVideoStream');
-        
-        // Set the srcObject of the A-Frame video element to the stream
-        remoteVideoStream.srcObject = stream;
-        
-        // When the remote stream is playing, set the videosphere's source
-        remoteVideoStream.onloadedmetadata = function() {
-            remoteVideoStream.play();
-            sceneEl.style.display = 'block'; // Show the A-Frame scene
-            document.querySelector('a-videosphere').setAttribute('src', '#remoteVideoStream');
-        };
-    });
-
-    // Additional code for setting up the stream goes here
-    // setRemoteStream(yourRemoteStream);
+// Additional code for setting up the stream goes here
 </script>
 
-  </body>
+</body>
 </html>
