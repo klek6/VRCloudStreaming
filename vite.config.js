@@ -5,5 +5,4 @@ export default defineConfig({
     outDir: 'docs',
   },
   base: './',
-  // ...other config
 });
