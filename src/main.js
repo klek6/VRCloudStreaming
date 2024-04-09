@@ -6,7 +6,6 @@ import { getFirestore, doc, getDoc, setDoc, collection, addDoc, onSnapshot } fro
 const firebaseConfig = {
   apiKey: "AIzaSyBlHOCK0h_cD2_SjWFBqBV7ODqJAfqHLF8",
   authDomain: "webrtc-webxr.firebaseapp.com",
-  databaseURL: "https://webrtc-webxr-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "webrtc-webxr",
   storageBucket: "webrtc-webxr.appspot.com",
   messagingSenderId: "253134015381",
