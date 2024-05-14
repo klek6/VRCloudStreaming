@@ -6,7 +6,6 @@ import { getFirestore, doc, getDoc, setDoc, collection, addDoc, onSnapshot } fro
 const firebaseConfig = {
   apiKey: "AIzaSyBlHOCK0h_cD2_SjWFBqBV7ODqJAfqHLF8",
   authDomain: "webrtc-webxr.firebaseapp.com",
-  databaseURL: "https://webrtc-webxr-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "webrtc-webxr",
   storageBucket: "webrtc-webxr.appspot.com",
   messagingSenderId: "253134015381",
@@ -55,7 +54,7 @@ async function initiateCall() {
   
   const offerDescription = await pc.createOffer();
   await pc.setLocalDescription(offerDescription);
-  await setDoc(callDocRef, { offer: offerDescription.toJSON() });
+  await setDoc(callDocRef, { offer: { type: offerDescription.type, sdp: offerDescription.sdp } });
 
   await setDoc(doc(firestore, 'currentCall', 'activeCall'), { callId: callDocRef.id });
 
@@ -81,7 +80,7 @@ async function joinCall() {
   
   const answerDescription = await pc.createAnswer();
   await pc.setLocalDescription(answerDescription);
-  await setDoc(callDocRef, { answer: answerDescription.toJSON() }, { merge: true });
+  await setDoc(callDocRef, { answer: { type: answerDescription.type, sdp: answerDescription.sdp } }, { merge: true });
 
   monitorCallCandidates(callDocRef, 'offerCandidates');
 }
