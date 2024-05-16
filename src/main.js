@@ -1,6 +1,6 @@
 // Importing Firebase utilities for handling real-time database operations
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, onSnapshot } from 'firebase/firestore';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 // Firebase configuration
 const firebaseConfig = {
